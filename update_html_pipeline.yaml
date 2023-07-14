@@ -1,0 +1,24 @@
+---
+format_version: 3
+pipelines:
+  - name: UpdateHTMLPipeline
+    materials:
+      - git: 
+          name: HTMLRepo
+          url: <git_repository_url>
+          branch: main
+          auto_update: true
+
+    stages:
+      - name: UpdateHTML
+        jobs:
+          - name: UpdateHTMLJob
+            working_directory: /var/www/html
+            environment_variables:
+              PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/path/to/git
+            tasks:
+              - exec:
+                  command: |
+                    git clean -f -d   # Clean working directory
+                    git reset --hard origin/main   # Reset to the latest commit on the main branch
+                    git pull   # Fetch and apply the latest changes from the repository
