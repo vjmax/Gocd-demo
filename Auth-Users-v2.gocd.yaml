@@ -8,12 +8,6 @@ pipelines:
     timer:
       spec: 0 0/1 * * * ?
       only_on_changes: false
-    materials:
-      git-448334b:
-        git: https://github.com/vijayk2018/gocd_vi_live
-        shallow_clone: false
-        auto_update: true
-        branch: master
     stages:
     - Dealmember:
         fetch_materials: true
