@@ -1,0 +1,79 @@
+format_version: 10
+pipelines:
+  Auth-Users-v2:
+    group: v2_live
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: -1
+    timer:
+      spec: 0 0/1 * * * ?
+      only_on_changes: false
+    materials:
+      git-448334b:
+        git: https://github.com/vijayk2018/gocd_vi_live
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - Dealmember:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          DealMember:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:dealmember
+                command: php
+                run_if: passed
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:cfslogin
+                command: php
+                run_if: passed
+          RELogin:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:relogin
+                command: php
+                run_if: passed
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:cfslogin
+                command: php
+                run_if: passed
+          MaLogin:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:malogin
+                command: php
+                run_if: passed
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:cfslogin
+                command: php
+                run_if: passed
+          CFSLogin:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - /var/www/files/v2-laravel/artisan
+                - refresh:auth:cfslogin
+                command: php
+                run_if: passed
