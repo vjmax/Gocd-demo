@@ -9,11 +9,11 @@ pipelines:
       spec: 0 0/1 * * * ?
       only_on_changes: false
     materials:
-      git-e955757:
-        git: https://bitbucket.org/letsgro/datalake.git
+      git-f8ebf0e:
+        git: https://github.com/vijayk2018/gocd_vi_live
         shallow_clone: false
-        auto_update: false
-        branch: main
+        auto_update: true
+        branch: master
     stages:
     - Dealmember:
         fetch_materials: true
