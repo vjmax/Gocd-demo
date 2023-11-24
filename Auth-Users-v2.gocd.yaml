@@ -8,12 +8,6 @@ pipelines:
     timer:
       spec: 0 0/1 * * * ?
       only_on_changes: false
-    materials:
-      git-2466c4b:
-        git: https://bitbucket.org/letsgro/datalake.git
-        shallow_clone: false
-        auto_update: false
-        branch: main
     stages:
     - Dealmember:
         fetch_materials: true
